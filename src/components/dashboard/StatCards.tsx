@@ -52,19 +52,27 @@ export default function StatCards({
   weeklyWorkoutsTarget,
 }: StatCardsProps) {
   const weightValue = weightLbs != null ? `${weightLbs} lbs` : '—'
-  const weightSub =
-    weightLbs != null && goalWeightLbs != null
-      ? `↓ ${weightLbs - goalWeightLbs} lbs to goal`
-      : 'Set goal in profile'
+  const weightSub = (() => {
+    if (weightLbs == null || goalWeightLbs == null) return 'Set goal in profile'
+    const delta = Math.round(weightLbs - goalWeightLbs)
+    if (delta > 0) return `↓ ${delta} lbs to goal`
+    if (delta === 0) return 'Goal reached!'
+    return `${Math.abs(delta)} lbs below goal`
+  })()
+  const weightColor = (() => {
+    if (weightLbs == null || goalWeightLbs == null) return 'var(--text-muted)'
+    const delta = Math.round(weightLbs - goalWeightLbs)
+    return delta <= 0 ? 'var(--accent)' : 'var(--success)'
+  })()
 
-  const calRemaining = calorieTarget - caloriesToday
+  const calRemaining = Math.round(calorieTarget - caloriesToday)
   const calSub =
     calRemaining >= 0
       ? `${calRemaining} remaining`
       : `${Math.abs(calRemaining)} over`
   const calColor = calRemaining >= 0 ? 'var(--accent)' : 'var(--text-secondary)'
 
-  const protRemaining = proteinTarget - proteinToday
+  const protRemaining = Math.round(proteinTarget - proteinToday)
   const protSub =
     protRemaining >= 0
       ? `${protRemaining}g remaining`
@@ -77,7 +85,7 @@ export default function StatCards({
         label="Weight"
         value={weightValue}
         subLine={weightSub}
-        subColor="var(--success)"
+        subColor={weightColor}
       />
       <StatCard
         label="Calories"
@@ -93,7 +101,7 @@ export default function StatCards({
       />
       <StatCard
         label="Workouts"
-        value={`${workoutsThisWeek} / ${weeklyWorkoutsTarget}`}
+        value={weeklyWorkoutsTarget > 0 ? `${workoutsThisWeek} / ${weeklyWorkoutsTarget}` : String(workoutsThisWeek)}
         subLine="this week"
         subColor="var(--accent)"
       />
