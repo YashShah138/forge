@@ -46,3 +46,6 @@ graphify-out/
 # claude
 .claude/
 CLAUDE.md
+.superpowers/
+.mcp.json
+AGENTS.md
