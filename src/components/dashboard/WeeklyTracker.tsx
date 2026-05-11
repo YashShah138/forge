@@ -54,9 +54,9 @@ export default function WeeklyTracker({ workoutDates }: WeeklyTrackerProps) {
           let content: string
 
           if (done) {
-            bg = 'var(--active-nav-bg)'
+            bg = 'var(--accent)'
             border = '2px solid var(--accent)'
-            textColor = 'var(--accent)'
+            textColor = 'var(--bg)'
             content = '✓'
           } else if (isToday) {
             bg = 'transparent'
