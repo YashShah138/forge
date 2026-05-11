@@ -12,12 +12,16 @@ function getInitials(email: string): string {
 }
 
 async function getStreak(supabase: Awaited<ReturnType<typeof createClient>>, userId: string): Promise<number> {
-  const { data: workouts } = await supabase
+  const { data: workouts, error } = await supabase
     .from('workouts')
     .select('date')
     .eq('user_id', userId)
     .order('date', { ascending: false })
 
+  if (error) {
+    console.error('getStreak query failed:', error.message)
+    return 0
+  }
   if (!workouts?.length) return 0
 
   let streak = 0
