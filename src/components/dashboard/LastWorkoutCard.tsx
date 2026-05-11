@@ -14,10 +14,16 @@ function getRelativeDate(dateStr: string): string {
   workoutDate.setHours(0, 0, 0, 0)
   const diffMs = today.getTime() - workoutDate.getTime()
   const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24))
+  if (diffDays < 0) return workoutDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
   if (diffDays === 0) return 'Today'
   if (diffDays === 1) return 'Yesterday'
   if (diffDays <= 6) return `${diffDays} days ago`
-  return workoutDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  const sameYear = workoutDate.getFullYear() === today.getFullYear()
+  return workoutDate.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    ...(sameYear ? {} : { year: 'numeric' }),
+  })
 }
 
 export default function LastWorkoutCard({ workout }: LastWorkoutCardProps) {
@@ -46,20 +52,26 @@ export default function LastWorkoutCard({ workout }: LastWorkoutCardProps) {
           >
             {getRelativeDate(workout.date)}
           </div>
-          <div className="flex flex-wrap gap-1.5">
-            {workout.exercises.map((ex, i) => (
-              <span
-                key={i}
-                className="rounded-md px-2 py-0.5 text-xs"
-                style={{
-                  background: 'var(--active-nav-bg)',
-                  color: 'var(--accent)',
-                }}
-              >
-                {ex}
-              </span>
-            ))}
-          </div>
+          {workout.exercises.length > 0 ? (
+            <div className="flex flex-wrap gap-1.5">
+              {workout.exercises.map((ex, i) => (
+                <span
+                  key={i}
+                  className="rounded-md px-2 py-0.5 text-xs"
+                  style={{
+                    background: 'var(--active-nav-bg)',
+                    color: 'var(--accent)',
+                  }}
+                >
+                  {ex}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+              No exercises logged
+            </div>
+          )}
         </>
       ) : (
         <div className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
