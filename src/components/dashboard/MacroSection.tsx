@@ -56,7 +56,7 @@ export default function MacroSection({
   fatToday,
   fatTarget,
 }: MacroSectionProps) {
-  const CIRC = 188.5
+  const CIRC = 188.5 // 2π × r=30
   const pct = calorieTarget > 0 ? Math.min(caloriesToday / calorieTarget, 1) : 0
   const offset = CIRC * (1 - pct)
   const displayPct = Math.round(pct * 100)
@@ -131,7 +131,7 @@ export default function MacroSection({
               strokeLinecap="round"
             />
           </svg>
-          <div className="absolute text-center">
+          <div className="absolute inset-0 flex items-center justify-center">
             <div
               className="text-sm font-medium"
               style={{ color: 'var(--text-primary)' }}
