@@ -16,22 +16,6 @@
   --success: #4ade80;
 }
 
-.light {
-  --bg: #f4f4f5;
-  --surface: #e4e4e7;
-  --border: #d4d4d8;
-  --text-primary: #09090b;
-  --text-secondary: #3f3f46;
-  --text-tertiary: #71717a;
-  --text-muted: #a1a1aa;
-  --accent: #65a30d;
-  --accent-mid: #84cc16;
-  --accent-light: #bef264;
-  --active-nav-bg: #ecfccb;
-  --track: #d4d4d8;
-  --success: #15803d;
-}
-
 * {
   border-color: var(--border);
 }

@@ -2,9 +2,6 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useLayoutEffect, useState } from 'react'
-
-const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/dashboard' },
@@ -21,23 +18,6 @@ interface SidebarProps {
 
 export default function Sidebar({ collapsed, streak, user }: SidebarProps) {
   const pathname = usePathname()
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
-
-  useIsomorphicLayoutEffect(() => {
-    const stored = localStorage.getItem('forge-theme')
-    if (stored === 'light') setTheme('light')
-  }, [])
-
-  function toggleTheme() {
-    const next = theme === 'dark' ? 'light' : 'dark'
-    setTheme(next)
-    localStorage.setItem('forge-theme', next)
-    if (next === 'light') {
-      document.documentElement.classList.add('light')
-    } else {
-      document.documentElement.classList.remove('light')
-    }
-  }
 
   return (
     <div
@@ -89,7 +69,7 @@ export default function Sidebar({ collapsed, streak, user }: SidebarProps) {
         })}
       </nav>
 
-      {/* Bottom: streak + theme toggle + user */}
+      {/* Bottom: streak + user */}
       {!collapsed && (
         <div
           className="flex flex-col gap-3 p-3 border-t"
@@ -100,33 +80,6 @@ export default function Sidebar({ collapsed, streak, user }: SidebarProps) {
               🔥 {streak} day streak
             </span>
           )}
-
-          {/* Theme toggle */}
-          <div className="flex items-center gap-2.5 px-2">
-            <button
-              onClick={toggleTheme}
-              className="relative flex-shrink-0 rounded-full transition-colors"
-              style={{
-                width: '40px',
-                height: '22px',
-                background: theme === 'dark' ? 'var(--accent)' : 'var(--track)',
-              }}
-              aria-label="Toggle theme"
-            >
-              <span
-                className="absolute top-[3px] rounded-full transition-transform duration-200"
-                style={{
-                  width: '16px',
-                  height: '16px',
-                  background: '#fff',
-                  left: theme === 'dark' ? '21px' : '3px',
-                }}
-              />
-            </button>
-            <span className="text-base" style={{ color: 'var(--text-muted)' }}>
-              {theme === 'dark' ? '☾' : '☀'}
-            </span>
-          </div>
 
           {/* User */}
           <div className="flex items-center gap-2.5 px-2">
