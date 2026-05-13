@@ -15,7 +15,16 @@ export default async function WorkoutsPage() {
     .eq('user_id', user.id)
     .order('date', { ascending: false })
 
-  if (error) console.error('workouts query failed:', error.message)
+  if (error) {
+    console.error('workouts query failed:', error.message)
+    return (
+      <div className="flex flex-col flex-1 min-h-0 items-center justify-center">
+        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+          Failed to load workouts. Please try refreshing.
+        </p>
+      </div>
+    )
+  }
 
   const rows = (workouts ?? []).map(w => ({
     id: w.id as string,
