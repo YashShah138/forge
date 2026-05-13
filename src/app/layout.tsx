@@ -26,6 +26,8 @@ export default function RootLayout({
               try {
                 var t = localStorage.getItem('forge-theme');
                 if (t === 'light') document.documentElement.classList.add('light');
+                var s = localStorage.getItem('forge-sidebar-collapsed');
+                if (s === 'true') document.documentElement.setAttribute('data-sidebar-collapsed', 'true');
               } catch(e) {}
             `,
           }}

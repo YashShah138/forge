@@ -2,7 +2,9 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
+
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/dashboard' },
@@ -21,7 +23,7 @@ export default function Sidebar({ collapsed, streak, user }: SidebarProps) {
   const pathname = usePathname()
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const stored = localStorage.getItem('forge-theme')
     if (stored === 'light') setTheme('light')
   }, [])
@@ -41,7 +43,7 @@ export default function Sidebar({ collapsed, streak, user }: SidebarProps) {
     <div
       className="flex flex-col flex-shrink-0 border-r transition-all duration-200"
       style={{
-        width: collapsed ? '56px' : '200px',
+        width: collapsed ? '64px' : '256px',
         background: 'var(--surface)',
         borderColor: 'var(--border)',
       }}
@@ -49,11 +51,11 @@ export default function Sidebar({ collapsed, streak, user }: SidebarProps) {
       {/* Logo */}
       <div
         className="flex items-center px-4 flex-shrink-0 border-b"
-        style={{ height: '40px', borderColor: 'var(--border)' }}
+        style={{ height: '64px', borderColor: 'var(--border)' }}
       >
         <span
           className="font-medium tracking-widest uppercase overflow-hidden whitespace-nowrap"
-          style={{ color: 'var(--text-primary)', fontSize: collapsed ? '14px' : '16px' }}
+          style={{ color: 'var(--text-primary)', fontSize: collapsed ? '15px' : '20px' }}
         >
           {collapsed ? 'F' : 'FORGE'}
         </span>
@@ -80,7 +82,7 @@ export default function Sidebar({ collapsed, streak, user }: SidebarProps) {
                 style={{ background: active ? 'var(--accent)' : 'var(--text-muted)' }}
               />
               {!collapsed && (
-                <span className="truncate text-xs tracking-wide">{label}</span>
+                <span className="truncate text-base tracking-wide">{label}</span>
               )}
             </Link>
           )
@@ -94,19 +96,19 @@ export default function Sidebar({ collapsed, streak, user }: SidebarProps) {
           style={{ borderColor: 'var(--border)' }}
         >
           {streak > 0 && (
-            <span className="text-xs px-2" style={{ color: 'var(--text-muted)' }}>
+            <span className="text-base px-2" style={{ color: 'var(--text-muted)' }}>
               🔥 {streak} day streak
             </span>
           )}
 
           {/* Theme toggle */}
-          <div className="flex items-center gap-2 px-2">
+          <div className="flex items-center gap-2.5 px-2">
             <button
               onClick={toggleTheme}
               className="relative flex-shrink-0 rounded-full transition-colors"
               style={{
-                width: '36px',
-                height: '20px',
+                width: '40px',
+                height: '22px',
                 background: theme === 'dark' ? 'var(--accent)' : 'var(--track)',
               }}
               aria-label="Toggle theme"
@@ -114,31 +116,31 @@ export default function Sidebar({ collapsed, streak, user }: SidebarProps) {
               <span
                 className="absolute top-[3px] rounded-full transition-transform duration-200"
                 style={{
-                  width: '14px',
-                  height: '14px',
+                  width: '16px',
+                  height: '16px',
                   background: '#fff',
-                  left: theme === 'dark' ? '19px' : '3px',
+                  left: theme === 'dark' ? '21px' : '3px',
                 }}
               />
             </button>
-            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+            <span className="text-base" style={{ color: 'var(--text-muted)' }}>
               {theme === 'dark' ? '☾' : '☀'}
             </span>
           </div>
 
           {/* User */}
-          <div className="flex items-center gap-2 px-2">
+          <div className="flex items-center gap-2.5 px-2">
             <div
-              className="w-6 h-6 rounded-full flex items-center justify-center text-[8px] font-bold flex-shrink-0"
+              className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0"
               style={{ background: 'var(--accent)', color: '#09090b' }}
             >
               {user.avatarInitials}
             </div>
             <div className="overflow-hidden">
-              <div className="text-xs truncate" style={{ color: 'var(--text-primary)' }}>
+              <div className="text-base truncate" style={{ color: 'var(--text-primary)' }}>
                 {user.name || user.email}
               </div>
-              <div className="text-[10px]" style={{ color: 'var(--text-muted)' }}>
+              <div className="text-sm" style={{ color: 'var(--text-muted)' }}>
                 Level 1
               </div>
             </div>
@@ -150,7 +152,7 @@ export default function Sidebar({ collapsed, streak, user }: SidebarProps) {
       {collapsed && (
         <div className="flex justify-center p-3 border-t" style={{ borderColor: 'var(--border)' }}>
           <div
-            className="w-6 h-6 rounded-full flex items-center justify-center text-[8px] font-bold"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold"
             style={{ background: 'var(--accent)', color: '#09090b' }}
           >
             {user.avatarInitials}

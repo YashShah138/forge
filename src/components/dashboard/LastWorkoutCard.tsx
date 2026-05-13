@@ -29,11 +29,11 @@ function getRelativeDate(dateStr: string): string {
 export default function LastWorkoutCard({ workout }: LastWorkoutCardProps) {
   return (
     <div
-      className="rounded-lg border p-4"
+      className="rounded-lg border p-6 h-full"
       style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
     >
       <div
-        className="text-xs uppercase tracking-widest mb-3"
+        className="text-sm uppercase tracking-widest mb-4"
         style={{ color: 'var(--text-muted)' }}
       >
         Last Workout
@@ -41,23 +41,23 @@ export default function LastWorkoutCard({ workout }: LastWorkoutCardProps) {
       {workout ? (
         <>
           <div
-            className="text-sm font-medium mb-1"
+            className="text-lg font-medium mb-1.5"
             style={{ color: 'var(--text-primary)' }}
           >
             {workout.name}
           </div>
           <div
-            className="text-xs mb-3"
+            className="text-sm mb-4"
             style={{ color: 'var(--text-tertiary)' }}
           >
             {getRelativeDate(workout.date)}
           </div>
           {workout.exercises.length > 0 ? (
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {workout.exercises.map((ex, i) => (
                 <span
                   key={i}
-                  className="rounded-md px-2 py-0.5 text-xs"
+                  className="rounded-md px-3 py-1 text-sm"
                   style={{
                     background: 'var(--active-nav-bg)',
                     color: 'var(--accent)',
@@ -68,13 +68,13 @@ export default function LastWorkoutCard({ workout }: LastWorkoutCardProps) {
               ))}
             </div>
           ) : (
-            <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+            <div className="text-sm" style={{ color: 'var(--text-muted)' }}>
               No exercises logged
             </div>
           )}
         </>
       ) : (
-        <div className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
+        <div className="text-base" style={{ color: 'var(--text-tertiary)' }}>
           No workouts logged yet
         </div>
       )}

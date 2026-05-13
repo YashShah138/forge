@@ -33,16 +33,16 @@ export default function WeeklyTracker({ workoutDates }: WeeklyTrackerProps) {
 
   return (
     <div
-      className="rounded-lg border p-4"
+      className="rounded-lg border p-6 h-full flex flex-col"
       style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
     >
       <div
-        className="text-xs uppercase tracking-widest mb-4"
+        className="text-sm uppercase tracking-widest mb-4"
         style={{ color: 'var(--text-muted)' }}
       >
         This Week
       </div>
-      <div className="flex justify-between">
+      <div className="flex-1 flex items-center justify-between">
         {weekDays.map((day, i) => {
           const iso = toDateStr(day)
           const isToday = iso === todayStr
@@ -71,12 +71,12 @@ export default function WeeklyTracker({ workoutDates }: WeeklyTrackerProps) {
           }
 
           return (
-            <div key={i} className="flex flex-col items-center gap-1">
-              <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
+            <div key={i} className="flex flex-col items-center gap-2">
+              <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
                 {DAY_LABELS[i]}
               </span>
               <div
-                className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-medium"
+                className="w-12 h-12 rounded-full flex items-center justify-center text-base font-medium"
                 style={{ background: bg, border, color: textColor }}
               >
                 {content}

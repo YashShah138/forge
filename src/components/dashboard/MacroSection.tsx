@@ -24,21 +24,21 @@ function MacroBar({
   const valueLabel = target > 0 ? `${value}g / ${target}g` : `${value}g`
 
   return (
-    <div className="mb-3 last:mb-0">
-      <div className="flex justify-between mb-1">
-        <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+    <div>
+      <div className="flex justify-between mb-2">
+        <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           {label}
         </span>
-        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+        <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
           {valueLabel}
         </span>
       </div>
       <div
-        className="h-1 rounded-full overflow-hidden"
+        className="h-2 rounded-full overflow-hidden"
         style={{ background: 'var(--track)' }}
       >
         <div
-          className="h-1 rounded-full"
+          className="h-2 rounded-full"
           style={{ width: `${pct}%`, background: color }}
         />
       </div>
@@ -56,76 +56,78 @@ export default function MacroSection({
   fatToday,
   fatTarget,
 }: MacroSectionProps) {
-  const CIRC = 188.5 // 2π × r=30
+  const CIRC = 314.2 // 2π × r=50
   const pct = calorieTarget > 0 ? Math.min(caloriesToday / calorieTarget, 1) : 0
   const offset = CIRC * (1 - pct)
   const displayPct = Math.round(pct * 100)
 
   return (
-    <div className="grid gap-2.5" style={{ gridTemplateColumns: '2fr 1fr' }}>
+    <div className="grid gap-2.5 h-full" style={{ gridTemplateColumns: '2fr 1fr', gridTemplateRows: '1fr' }}>
       {/* Macro bars */}
       <div
-        className="rounded-lg border p-4"
+        className="rounded-lg border p-6 flex flex-col h-full"
         style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
       >
         <div
-          className="text-xs uppercase tracking-widest mb-4"
+          className="text-sm uppercase tracking-widest mb-4"
           style={{ color: 'var(--text-muted)' }}
         >
           Macros Today
         </div>
-        <MacroBar
-          label="Protein"
-          value={proteinToday}
-          target={proteinTarget}
-          color="var(--accent)"
-        />
-        <MacroBar
-          label="Carbs"
-          value={carbsToday}
-          target={carbsTarget}
-          color="var(--accent-mid)"
-        />
-        <MacroBar
-          label="Fat"
-          value={fatToday}
-          target={fatTarget}
-          color="var(--accent-light)"
-        />
+        <div className="flex-1 flex flex-col justify-around">
+          <MacroBar
+            label="Protein"
+            value={proteinToday}
+            target={proteinTarget}
+            color="var(--accent)"
+          />
+          <MacroBar
+            label="Carbs"
+            value={carbsToday}
+            target={carbsTarget}
+            color="var(--accent-mid)"
+          />
+          <MacroBar
+            label="Fat"
+            value={fatToday}
+            target={fatTarget}
+            color="var(--accent-light)"
+          />
+        </div>
       </div>
 
       {/* Calorie ring */}
       <div
-        className="rounded-lg border p-4 flex flex-col items-center justify-center"
+        className="rounded-lg border p-6 flex flex-col items-center justify-center h-full"
         style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
       >
         <div
-          className="text-xs uppercase tracking-widest mb-3"
+          className="text-sm uppercase tracking-widest mb-4"
           style={{ color: 'var(--text-muted)' }}
         >
           Daily Goal
         </div>
         <div className="relative flex items-center justify-center">
           <svg
-            width="72"
-            height="72"
+            width="140"
+            height="140"
             style={{ transform: 'rotate(-90deg)' }}
           >
             <circle
-              cx="36"
-              cy="36"
-              r="30"
+              cx="70"
+              cy="70"
+              r="50"
               fill="none"
               stroke="var(--track)"
-              strokeWidth="6"
+              strokeWidth="10"
             />
             <circle
-              cx="36"
-              cy="36"
-              r="30"
+              cx="70"
+              cy="70"
+              r="50"
               fill="none"
               stroke="var(--accent)"
-              strokeWidth="6"
+              strokeWidth="10"
               strokeDasharray={CIRC}
               strokeDashoffset={offset}
               strokeLinecap="round"
@@ -133,7 +135,7 @@ export default function MacroSection({
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
             <div
-              className="text-sm font-medium"
+              className="text-2xl font-medium"
               style={{ color: 'var(--text-primary)' }}
             >
               {displayPct}%
@@ -141,7 +143,7 @@ export default function MacroSection({
           </div>
         </div>
         <div
-          className="text-xs mt-2"
+          className="text-sm mt-3"
           style={{ color: 'var(--text-tertiary)' }}
         >
           of daily goal

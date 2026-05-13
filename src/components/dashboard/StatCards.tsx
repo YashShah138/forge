@@ -22,19 +22,19 @@ function StatCard({
 }) {
   return (
     <div
-      className="rounded-lg border p-4"
+      className="rounded-lg border p-6"
       style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
     >
       <div
-        className="text-xs uppercase tracking-widest mb-2"
+        className="text-sm uppercase tracking-widest mb-3"
         style={{ color: 'var(--text-muted)' }}
       >
         {label}
       </div>
-      <div className="text-2xl font-medium" style={{ color: 'var(--text-primary)' }}>
+      <div className="text-4xl font-medium" style={{ color: 'var(--text-primary)' }}>
         {value}
       </div>
-      <div className="text-xs mt-1" style={{ color: subColor }}>
+      <div className="text-sm mt-2" style={{ color: subColor }}>
         {subLine}
       </div>
     </div>

@@ -113,7 +113,7 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="flex flex-col gap-2.5">
+    <div className="flex flex-col gap-4 flex-1 min-h-0">
       <StatCards
         weightLbs={profile?.weight_lbs ?? null}
         goalWeightLbs={profile?.goal_weight_lbs ?? null}
@@ -124,17 +124,19 @@ export default async function DashboardPage() {
         workoutsThisWeek={workoutDates.length}
         weeklyWorkoutsTarget={profile?.weekly_workouts_target ?? 0}
       />
-      <MacroSection
-        caloriesToday={caloriesToday}
-        calorieTarget={calorieTarget}
-        proteinToday={proteinToday}
-        proteinTarget={proteinTarget}
-        carbsToday={carbsToday}
-        carbsTarget={carbsTarget}
-        fatToday={fatToday}
-        fatTarget={fatTarget}
-      />
-      <div className="grid grid-cols-2 gap-2.5">
+      <div className="flex-1 min-h-0">
+        <MacroSection
+          caloriesToday={caloriesToday}
+          calorieTarget={calorieTarget}
+          proteinToday={proteinToday}
+          proteinTarget={proteinTarget}
+          carbsToday={carbsToday}
+          carbsTarget={carbsTarget}
+          fatToday={fatToday}
+          fatTarget={fatTarget}
+        />
+      </div>
+      <div className="flex-1 min-h-0 grid grid-cols-2 gap-4" style={{ gridTemplateRows: '1fr' }}>
         <WeeklyTracker workoutDates={workoutDates} />
         <LastWorkoutCard workout={lastWorkoutData} />
       </div>
