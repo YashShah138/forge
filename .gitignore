@@ -51,3 +51,6 @@ CLAUDE.md
 AGENTS.md
 handoff.md
 .planning/*
+
+# forge agent (local dev tool, not part of the app)
+forge_agent/
